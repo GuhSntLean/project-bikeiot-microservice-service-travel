@@ -15,22 +15,22 @@ app.use(express.urlencoded());
 
 app.use(routes);
 
-const serveramqp = async () => {
-  const serverUser = new RabbitMQServer();
-  const serverBike = new RabbitMQServer();
+// const serveramqp = async () => {
+//   const serverUser = new RabbitMQServer();
+//   // const serverBike = new RabbitMQServer();
 
-  await serverUser.start();
-  await serverBike.start();
+//   await serverUser.start();
+//   // await serverBike.start();
 
-  await serverUser.consume("micro.common.user", (message) => {
-    console.log(message.fields);
-  });
+//   await serverUser.consume("micro.common.travel", (message) => {
+//     console.log(message);
+//   });
 
-  await serverBike.consume("data.bike", (message) => {
-    console.log(message.fields);
-  });
-};
+//   // await serverBike.consume("data.bike", (message) => {
+//   //   console.log(message.fields);
+//   // });
+// };
 
-serveramqp();
+// serveramqp();
 
 export { app, httpServer };
