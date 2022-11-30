@@ -16,20 +16,30 @@ interface Locate {
 }
 
 io.on("connection", (socket) => {
-  socket.on("", (informations) => {
-    socket.join(informations);
+  console.log(socket.id);
+  socket.on("joinRoom", (informations) => {
+    console.log(informations);
 
-    socket.on("coordenation", (data) => {
-      // TODO: Criar messagem do usuario
-      const message: Locate = {
-        idRoute: data.idroute,
-        lat: data.lat,
-        log: data.log,
-        sentAt: new Date(),
-      };
+    const message: Locate = {
+      idRoute: informations.idroute,
+      lat: informations.lat,
+      log: informations.log,
+      sentAt: new Date(),
+    };
 
-      io.to(frontUser).emit("message", message);
-      // TODO: Enviar dados para o banco ou fila de processamento
-    });
+    // console.log(message);
+
+    // socket.on("coordenation", (data) => {
+    //   // TODO: Criar messagem do usuario
+    //   const message: Locate = {
+    //     idRoute: data.idroute,
+    //     lat: data.lat,
+    //     log: data.log,
+    //     sentAt: new Date(),
+    //   };
+    //   console.log(data);
+    //   io.to(frontUser).emit("message", message);
+    //   // TODO: Enviar dados para o banco ou fila de processamento
+    // });
   });
 });
