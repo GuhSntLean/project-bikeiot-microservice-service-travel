@@ -1,0 +1,3 @@
+class TravelRouter {}
+
+export { TravelRouter };

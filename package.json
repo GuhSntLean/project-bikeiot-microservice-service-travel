@@ -33,6 +33,7 @@
       "mongoose": "^6.7.2",
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.13",
+      "socket.io": "^4.5.3",
       "typeorm": "0.3.7",
       "uuid": "^8.3.2"
    }

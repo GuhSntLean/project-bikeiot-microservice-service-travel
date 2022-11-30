@@ -4,7 +4,7 @@ import routes from "../routes/routes";
 import { RabbitMQServer } from "./RabbitMQServer";
 
 const app = express();
-const appPort = process.env.PORT || 3003;
+const appPort = process.env.PORT || 3004;
 
 const httpServer = http.createServer(app);
 

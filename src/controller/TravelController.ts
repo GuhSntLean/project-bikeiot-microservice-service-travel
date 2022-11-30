@@ -1,0 +1,3 @@
+class TravelController {}
+
+export { TravelController };

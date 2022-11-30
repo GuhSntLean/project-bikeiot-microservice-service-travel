@@ -1,0 +1,5 @@
+class UserAdminUseCase {
+
+}
+
+export {UserAdminUseCase}

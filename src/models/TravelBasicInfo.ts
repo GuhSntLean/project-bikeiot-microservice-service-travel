@@ -1,0 +1,3 @@
+class TravelBasicInfo {}
+
+export { TravelBasicInfo };

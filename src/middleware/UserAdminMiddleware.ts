@@ -1,0 +1,3 @@
+class UserAdminMiddleware {}
+
+export { UserAdminMiddleware };
