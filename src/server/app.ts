@@ -1,12 +1,14 @@
 import express from "express";
 import http from "http";
 import routes from "../routes/routes";
-import { RabbitMQServer } from "./RabbitMQServer";
+import { Server } from "socket.io";
+// import { RabbitMQServer } from "./RabbitMQServer";
 
 const app = express();
 const appPort = process.env.PORT || 3004;
 
 const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 
 app.set("port", appPort);
 
@@ -33,4 +35,4 @@ app.use(routes);
 
 // serveramqp();
 
-export { app, httpServer };
+export { app, httpServer, io };

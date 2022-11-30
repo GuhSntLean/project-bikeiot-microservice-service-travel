@@ -1,6 +1,7 @@
 import { app, httpServer } from "./app";
 import os from "os";
 import mongoose from "mongoose";
+import "./socketServer"
 
 const server = async () => {
   try {
