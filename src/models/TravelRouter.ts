@@ -1,25 +1,16 @@
 import mongoose, { Schema } from "mongoose";
 
-const PointsCoordenatesSchema = new Schema({
-  lat: { type: Number, require: true },
-  log: { type: Number, require: true },
-  dateHour: { type: Date, require: true },
-});
-
 const TravelRouterSchema = new Schema({
-  
+  idtravelbasic: String,
   coordenates: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "PointsCoordenates",
+      lat: { type: Number, require: true },
+      log: { type: Number, require: true },
+      dateHour: { type: Date, require: true },
     },
   ],
 });
 
-const PointsCoordenates = mongoose.model(
-  "PointsCoordenates",
-  PointsCoordenatesSchema
-);
 const TravelRouter = mongoose.model("TravelRouter", TravelRouterSchema);
 
-export {PointsCoordenates, TravelRouter}
+export { TravelRouter };

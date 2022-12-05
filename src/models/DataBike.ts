@@ -1,11 +1,13 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const DataBike = new Schema({
+const DataBikeSchema = new Schema({
   id: String,
   serialnumber: String,
   mac: String,
   status: String,
   modelbike: String,
 });
+
+const DataBike = mongoose.model("DataBike", DataBikeSchema);
 
 export { DataBike };
