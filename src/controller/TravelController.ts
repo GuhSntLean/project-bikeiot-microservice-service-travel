@@ -11,11 +11,13 @@ class TravelController {
 
     try {
       const travel = new TravelUseCase();
-      const result = travel.startRace(iduser, idbike);
+      const result = await travel.startRace(iduser, idbike); 
 
       if (result instanceof Error) {
-        return response.status(400).json({ error: result.message });
+        return response.status(400).json({error: result.message});
       }
+
+      return response.status(201).json({ result });
     } catch (error) {
       console.log(error);
       return response.status(500).json({ error: error.message });
@@ -38,6 +40,8 @@ class TravelController {
       if (result instanceof Error) {
         return response.status(400).json({ error: result.message });
       }
+
+      return response.status(201).json({ result });
     } catch (error) {
       console.log(error);
       return response.status(500).json({ error: error.message });
