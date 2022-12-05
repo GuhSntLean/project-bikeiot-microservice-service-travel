@@ -41,11 +41,17 @@ class TravelUseCase {
   }
 
   async addCoordinatesRace(id: string, lat: number, log: number) {
-    const racinng = await TravelRouter.findById(id);
+    const travel = await TravelBasicInfo.findById(id);
 
-    if (!racinng) {
+    if (!travel) {
       return new Error("Travel not found");
     }
+
+    if (travel.statusRunning == false) {
+      return new Error("Race already ended coordinate cannot be saved");
+    }
+
+    const racinng = await TravelRouter.findOne({ idtravelbasic: travel.id });
 
     try {
       racinng.coordenates = [
@@ -60,11 +66,37 @@ class TravelUseCase {
     }
   }
 
-  async stopRace() {}
+  async stopRace(id: string) {
+    const travel = await TravelBasicInfo.findById(id);
 
-  async findRaceUser() {}
-  async listRaceUser() {}
-  async listRace() {}
+    if (!travel) {
+      return new Error("Travel not found");
+    }
+
+    if (travel.statusRunning == false) {
+      return new Error("This race has now ended");
+    }
+
+    try {
+      travel.statusRunning = false;
+      await travel.save();
+
+      const resultTravelStop = await TravelBasicInfo.findById(id);
+
+      if (resultTravelStop.statusRunning == true) {
+        return new Error("Erro saving new status");
+      }
+
+      const returnResult = {
+        idtravel: resultTravelStop.id,
+        statustravel: resultTravelStop.statusRunning,
+      };
+
+      return returnResult;
+    } catch (error) {
+      return new Error(error.message);
+    }
+  }
 }
 
 export { TravelUseCase };
