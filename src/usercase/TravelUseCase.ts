@@ -51,16 +51,22 @@ class TravelUseCase {
       return new Error("Race already ended coordinate cannot be saved");
     }
 
-    const racinng = await TravelRouter.findOne({ idtravelbasic: travel.id });
-
     try {
+      const racinng = await TravelRouter.findOne({ idtravelbasic: travel.id });
+
       racinng.coordenates = [
         ...racinng.coordenates,
         { lat: lat, log: log, dateHour: new Date() },
       ];
       racinng.save();
 
-      return true;
+      const resultResponse = {
+        savein: new Date(),
+        valid: true,
+        save: true,
+      };
+
+      return resultResponse;
     } catch (error) {
       return new Error(error.message);
     }
