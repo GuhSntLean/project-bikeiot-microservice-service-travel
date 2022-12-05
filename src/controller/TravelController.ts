@@ -6,6 +6,8 @@ class TravelController {
   async finishRace(request: Request, response: Response) {}
 
   async listUserTravel(request: Request, response: Response) {}
+
+  async selectTravel(request: Request, response: Response) {}
 }
 
 export { TravelController };

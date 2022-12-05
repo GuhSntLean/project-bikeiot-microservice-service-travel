@@ -3,6 +3,22 @@ import os from "os";
 import mongoose from "mongoose";
 import "./socketServer";
 
+// const serveramqp = async () => {
+//   const serverUser = new RabbitMQServer();
+//   // const serverBike = new RabbitMQServer();
+
+//   await serverUser.start();
+//   // await serverBike.start();
+
+//   await serverUser.consume("micro.common.travel", (message) => {
+//     console.log(message);
+//   });
+
+//   // await serverBike.consume("data.bike", (message) => {
+//   //   console.log(message.fields);
+//   // });
+// };
+
 const server = async () => {
   try {
     mongoose
@@ -21,3 +37,4 @@ const server = async () => {
 };
 
 server();
+// serveramqp();

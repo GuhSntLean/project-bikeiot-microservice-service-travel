@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { TravelController } from "../controller/TravelController";
+
+const travelController = new TravelController
 
 const routes = Router();
 

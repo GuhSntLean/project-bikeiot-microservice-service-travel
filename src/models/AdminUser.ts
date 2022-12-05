@@ -1,8 +1,10 @@
-class AdminUser {
-  id: string;
-  userName: string;
-  email: string;
-  role: string;
-}
+import { Schema } from "mongoose";
+
+const AdminUser = new Schema({
+  id: String,
+  userName: String,
+  email: String,
+  role: String,
+});
 
 export { AdminUser };
