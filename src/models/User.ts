@@ -1,7 +1,11 @@
+import { v4 as uuid } from "uuid";
 import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new Schema({
-  id: String,
+  idUser: {
+    type: String,
+    default: () => uuid,
+  },
   userName: String,
   email: String,
 });

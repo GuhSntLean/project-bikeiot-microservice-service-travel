@@ -2,22 +2,26 @@ import { app, httpServer } from "./app";
 import os from "os";
 import mongoose from "mongoose";
 import "./socketServer";
+import { RabbitMQServer } from "./RabbitMQServer";
+import { UserUseCase } from "../usercase/UserUseCase";
 
-// const serveramqp = async () => {
-//   const serverUser = new RabbitMQServer();
-//   // const serverBike = new RabbitMQServer();
+const serveramqp = async () => {
+  const serverUser = new RabbitMQServer();
+  // const serverBike = new RabbitMQServer();
 
-//   await serverUser.start();
-//   // await serverBike.start();
+  await serverUser.start();
+  // await serverBike.start();
 
-//   await serverUser.consume("micro.common.travel", (message) => {
-//     console.log(message);
-//   });
+  await serverUser.consume("travel.user", (message) => {
+    console.log(message.content.toString())
+    const user = new UserUseCase()
+    user.save(message.content.toString())
+  });
 
-//   // await serverBike.consume("data.bike", (message) => {
-//   //   console.log(message.fields);
-//   // });
-// };
+  // await serverBike.consume("data.bike", (message) => {
+  //   console.log(message.fields);
+  // });
+};
 
 const server = async () => {
   try {
@@ -37,4 +41,4 @@ const server = async () => {
 };
 
 server();
-// serveramqp();
+serveramqp();

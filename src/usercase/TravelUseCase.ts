@@ -6,20 +6,20 @@ import { User } from "../models/User";
 class TravelUseCase {
   async startRace(iduser: string, idbike: string) {
     try {
-      // const bike = await DataBike.findOne({ id: idbike });
-      // const user = await User.findOne({ id: iduser });
+      const bike = await DataBike.findOne({ idbike: idbike });
+      const user = await User.findOne({ idUser: iduser });
 
-      // if (!bike || !user) {
-      //   return new Error("User or bike not found");
-      // }
+      if (!bike || !user) {
+        return new Error("User or bike not found");
+      }
 
-      // if (bike.status != "active") {
-      //   return new Error("Error connecting the bike");
-      // }
+      if (bike.status != "active") {
+        return new Error("Error connecting the bike");
+      }
 
       const createTravel = await TravelBasicInfo.create({
-        idbike: idbike,
-        iduser: iduser,
+        idbike: bike.idbike,
+        iduser: user.idUser,
         initRunning: new Date(),
         finishRunning: new Date(),
         statusRunning: true,
