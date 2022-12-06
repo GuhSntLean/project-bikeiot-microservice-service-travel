@@ -68,6 +68,28 @@ class TravelController {
     }
   }
 
+  async forceStopTravel(request: Request, response: Response) {
+    const { idtravel } = request.body;
+
+    if (!idtravel) {
+      return response.status(400).json({ error: "Field is missing" });
+    }
+
+    try {
+      const travel = new TravelUseCase();
+      const result = await travel.forceStopTravel(idtravel);
+
+      if (result instanceof Error) {
+        return response.status(400).json({ error: result.message });
+      }
+
+      return response.status(201).json({ result });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ error: error.message });
+    }
+  }
+
   async listUserTravel(request: Request, response: Response) {}
 
   async selectTravel(request: Request, response: Response) {}

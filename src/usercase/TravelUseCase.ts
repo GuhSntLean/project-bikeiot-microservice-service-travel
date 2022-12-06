@@ -9,6 +9,16 @@ class TravelUseCase {
       const bike = await DataBike.findOne({ idbike: idbike });
       const user = await User.findOne({ idUser: iduser });
 
+      const verifyUserActiveStart = await TravelBasicInfo.findOne({
+        iduser: iduser,
+        status: true,
+      });
+
+      console.log(verifyUserActiveStart);
+      if (verifyUserActiveStart) {
+        return new Error("Finish the previous race before starting a new race");
+      }
+
       if (!bike || !user) {
         return new Error("User or bike not found");
       }
@@ -85,6 +95,7 @@ class TravelUseCase {
 
     try {
       travel.statusRunning = false;
+      travel.finishRunning = new Date();
       await travel.save();
 
       const resultTravelStop = await TravelBasicInfo.findById(id);
@@ -101,6 +112,47 @@ class TravelUseCase {
       return returnResult;
     } catch (error) {
       return new Error(error.message);
+    }
+  }
+
+  async forceStopTravel(id: string) {
+    const travel = await TravelBasicInfo.findById(id);
+    console.log(travel)
+    if (!travel) {
+      return new Error("Travel not found");
+    }
+
+    if (travel.statusRunning == true) {
+      try {
+        travel.statusRunning = false;
+        travel.finishRunning = new Date();
+        await travel.save();
+
+        const resultTravelStop = await TravelBasicInfo.findById(id);
+
+        if (resultTravelStop.statusRunning == true) {
+          return new Error("Erro saving new status");
+        }
+
+        const returnResult = {
+          idtravel: resultTravelStop.id,
+          statustravel: resultTravelStop.statusRunning,
+          timeclosetravel: resultTravelStop.finishRunning,
+        };
+
+        return returnResult;
+      } catch (error) {
+        return new Error(error.message);
+      }
+    } else {
+
+      const returnResult = {
+        idtravel: travel.id,
+        statustravel: travel.statusRunning,
+        timeclosetravel: travel.finishRunning,
+      };
+
+      return returnResult
     }
   }
 }
