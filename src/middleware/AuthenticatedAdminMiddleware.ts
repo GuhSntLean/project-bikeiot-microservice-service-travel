@@ -7,7 +7,6 @@ class AuthenticatedAdminMiddleware {
     response: Response,
     next: NextFunction
   ) {
-    console.log("entrou");
     const authToken = request.headers.authorization;
 
     if (!authToken) {

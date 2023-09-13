@@ -11,7 +11,7 @@ class TravelUseCase {
 
       const verifyUserActiveStart = await TravelBasicInfo.findOne({
         iduser: iduser,
-        status: true,
+        statusRunning: true,
       });
 
       console.log(verifyUserActiveStart);
@@ -57,6 +57,7 @@ class TravelUseCase {
       return new Error("Travel not found");
     }
 
+    console.log(travel);
     if (travel.statusRunning == false) {
       return new Error("Race already ended coordinate cannot be saved");
     }
@@ -117,7 +118,7 @@ class TravelUseCase {
 
   async forceStopTravel(id: string) {
     const travel = await TravelBasicInfo.findById(id);
-    console.log(travel)
+    console.log(travel);
     if (!travel) {
       return new Error("Travel not found");
     }
@@ -145,14 +146,59 @@ class TravelUseCase {
         return new Error(error.message);
       }
     } else {
-
       const returnResult = {
         idtravel: travel.id,
         statustravel: travel.statusRunning,
         timeclosetravel: travel.finishRunning,
       };
 
-      return returnResult
+      return returnResult;
+    }
+  }
+
+  async listUserTravel(iduser: string) {
+    try {
+      const userExist = await User.findOne({ idUser: iduser });
+      if (!userExist) {
+        return new Error("User not found");
+      }
+
+      const travel = await TravelBasicInfo.find()
+        .where("iduser")
+        .equals(iduser);
+
+      console.log(travel);
+      return travel;
+    } catch (error) {
+      return new Error(error.message);
+    }
+  }
+
+  async getTravel(idtravel: string) {
+    try {
+      const travel = await TravelBasicInfo.findById(idtravel);
+      if (!travel) {
+        return new Error("Travel not found");
+      }
+
+      console.log(travel);
+      return travel;
+    } catch (error) {
+      return new Error(error.message);
+    }
+  }
+
+  async getCoordenates(idtravel: string) {
+    try {
+      const coordenates = await TravelRouter.findOne({ idtravelbasic: idtravel });
+      if (!coordenates) {
+        return new Error("Travel not found");
+      }
+
+      console.log(coordenates);
+      return coordenates;
+    } catch (error) {
+      return new Error(error.message);
     }
   }
 }

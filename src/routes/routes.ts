@@ -26,19 +26,46 @@ routes.post(
   authenticatedUserMiddleware.ensureAuthenticated,
   travelController.finishRace
 );
+
+// rotas
 routes.post(
-  "/get-all-travel-user",
-  authenticatedUserMiddleware.ensureAuthenticated
+  "/getall-traveluser",
+  authenticatedUserMiddleware.ensureAuthenticated,
+  travelController.listUserTravel
 );
-routes.post("/get-travel", authenticatedUserMiddleware.ensureAuthenticated);
+routes.post(
+  "/travel-get",
+  authenticatedUserMiddleware.ensureAuthenticated,
+  travelController.selectTravel
+);
+routes.post(
+  "/getcoordinates",
+  authenticatedUserMiddleware.ensureAuthenticated,
+  travelController.selectCoordenatesTravel
+);
+
+// Rotas Administrador
+routes.post(
+  "/all-traveluser",
+  authenticatedAdminMiddleware.ensureAuthenticated,
+  travelController.listUserTravel
+);
+routes.post(
+  "/travel",
+  authenticatedAdminMiddleware.ensureAuthenticated,
+  travelController.selectTravel
+);
+routes.post(
+  "/coordenates",
+  authenticatedAdminMiddleware.ensureAuthenticated,
+  travelController.selectCoordenatesTravel
+);
 
 // Admin Routes
-
 routes.post(
   "/force-stop-travel",
   authenticatedAdminMiddleware.ensureAuthenticated,
   travelController.forceStopTravel
 );
-routes.post("/get-all-travel");
 
 export default routes;

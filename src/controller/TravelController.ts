@@ -90,9 +90,71 @@ class TravelController {
     }
   }
 
-  async listUserTravel(request: Request, response: Response) {}
+  async listUserTravel(request: Request, response: Response) {
+    const { iduser } = request.body;
 
-  async selectTravel(request: Request, response: Response) {}
+    if (!iduser) {
+      return response.status(400).json({ error: "Field is missing" });
+    }
+
+    try {
+      const travel = new TravelUseCase();
+      const result = await travel.listUserTravel(iduser);
+
+      if (result instanceof Error) {
+        return response.status(400).json({ error: result.message });
+      }
+
+      return response.status(201).json({ result });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ error: error.message });
+    }
+  }
+
+  async selectTravel(request: Request, response: Response) {
+    const { idtravel } = request.body;
+
+    if (!idtravel) {
+      return response.status(400).json({ error: "Field is missing" });
+    }
+
+    try {
+      const travel = new TravelUseCase();
+      const result = await travel.getTravel(idtravel);
+
+      if (result instanceof Error) {
+        return response.status(400).json({ error: result.message });
+      }
+
+      return response.status(201).json({ result });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ error: error.message });
+    }
+  }
+
+  async selectCoordenatesTravel(request: Request, response: Response) {
+    const { idtravel } = request.body;
+
+    if (!idtravel) {
+      return response.status(400).json({ error: "Field is missing" });
+    }
+
+    try {
+      const travel = new TravelUseCase();
+      const result = await travel.getCoordenates(idtravel);
+
+      if (result instanceof Error) {
+        return response.status(400).json({ error: result.message });
+      }
+
+      return response.status(201).json({ result });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export { TravelController };
